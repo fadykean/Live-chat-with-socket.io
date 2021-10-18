@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Live chat simple example</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <h1>Live chat example with socket.io</h1>
+  <textarea placeholder="Write your messega" id="message" cols="50" rows="10"></textarea>
+  <br><br>
+  <input type="button" value="Send messega" id="send-btn"><br><br>
+  <div id="ms-holder"></div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+
+    var socket = io.connect();
+
+    $('#send-btn').on('click', function () {
+      socket.emit('input', $('#message').val());
+      $('#message').val('');
+    });
+
+    socket.on('new', function (ms) {
+      $('#ms-holder').append(ms + '<br>');
+    });
+
+  </script>
+</body>
+
+</html>
